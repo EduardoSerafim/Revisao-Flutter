@@ -3,14 +3,16 @@ import '../../utils/exports.dart';
 
 class StandardForm extends StatelessWidget {
   final String label;
-  StandardForm({required this.label});
+  final Function()? onEditingComplete;
+  final TextEditingController? userInputController;
+  StandardForm({required this.label, this.userInputController, this.onEditingComplete});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      decoration: InputDecoration(
-        label: Text(label)
-      )
+      onEditingComplete: onEditingComplete ,
+      controller: userInputController,
+      decoration: InputDecoration(label: Text(label))
     );
   }
 }
