@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:revisao/src/app/components/standard_buttom.dart';
 import 'package:revisao/src/app/modules/create_account/create_account.dart';
+import 'package:revisao/src/app/modules/transaction/transaction_page.dart';
 import 'package:revisao/src/utils/exports.dart';
 import 'package:revisao/src/utils/paddings.dart';
 
@@ -31,7 +32,7 @@ class IntroPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomePage())
+                    MaterialPageRoute(builder: (context) => TransactionPage())
                   );
                 },
                 buttonText: login

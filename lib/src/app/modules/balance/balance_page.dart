@@ -29,8 +29,9 @@ class _BalancePageState extends State<BalancePage> {
               ),
             ),
             const SizedBox(height: 20),
-            StandartCardContent()
+            
           ],
-        ));
+        )
+      );
   }
 }

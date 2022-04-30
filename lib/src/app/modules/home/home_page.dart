@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:revisao/src/app/components/standard_buttom.dart';
 import 'package:revisao/src/app/components/standard_page.dart';
 
-import '../balance_page/balance_page.dart';
+import '../balance/balance_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
