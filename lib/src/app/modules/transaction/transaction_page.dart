@@ -52,17 +52,21 @@ class _TransactionPageState extends State<TransactionPage> {
     });
   }
 
-  Future<void> _showDialog(String transactionName, transactionValue) async {
+  Future<void> _showDialog({required String transactionName, required String transactionValue}) async {
     return showDialog<void>(
+      barrierDismissible: false,
         context: context,
-        builder: (BuildContextcontext) {
+        builder: (BuildContext context) {
           return AlertDialog(
             title: Text(transactionName),
             content: SingleChildScrollView(
-              child: Container(
-                child: Text('O valor da transação é de: $transactionValue '),
-              ),
+              child: Text('O valor da transação é R\$ $transactionValue'),
             ),
+            actions: <Widget>[
+              TextButton(onPressed: (){
+                Navigator.of(context).pop();
+              }, child: Text('Voltar'))
+            ],
           );
         });
   }
@@ -104,16 +108,16 @@ class _TransactionPageState extends State<TransactionPage> {
                   shrinkWrap: true,
                   itemCount: transactionList.length,
                   itemBuilder: (context, index) {
-                    var listaItem = transactionList[index];
+                    var transactionItem = transactionList[index];
                     return MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
                         onTap: () {
-                          print(listaItem.transactionName);
+                          _showDialog(transactionName:transactionItem.transactionName.toString(), transactionValue:transactionItem.transactionValue.toString());
                         },
                         child: StandartCardContent(
-                            leftText: listaItem.transactionName!,
-                            rightText: 'R\$: ${listaItem.transactionValue}'),
+                            leftText: transactionItem.transactionName!,
+                            rightText: 'R\$: ${transactionItem.transactionValue}'),
                       ),
                     );
                   }),
