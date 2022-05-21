@@ -4,6 +4,7 @@ import 'package:revisao/src/app/components/standard_card_content.dart';
 import 'package:revisao/src/app/components/standard_form.dart';
 import 'package:revisao/src/app/components/standard_page.dart';
 import 'package:revisao/src/app/model/transaction_model.dart';
+import 'package:revisao/src/app/modules/transaction/transaction_controller.dart';
 
 class TransactionPage extends StatefulWidget {
   @override
@@ -18,10 +19,16 @@ class _TransactionPageState extends State<TransactionPage> {
   FocusNode transactionNameFocus = FocusNode();
   FocusNode transactionValueFocus = FocusNode();
 
+  final transactionController = TransactionController();
+  
   @override
   void initState() {
     super.initState();
-    print('comecei o widget');
+    transactionController.addListener(() { 
+      setState(() {
+        
+      });
+    });
   }
 
   @override
@@ -30,27 +37,9 @@ class _TransactionPageState extends State<TransactionPage> {
     print('O widget foi destruido');
   }
 
-  List<TransactionModel> transactionList = [
-    TransactionModel(transactionName: 'Tudo Salgado', transactionValue: 2),
-    TransactionModel(transactionName: 'Conta de luz', transactionValue: 150.75),
-    TransactionModel(
-        transactionName: 'Multa de velocidade', transactionValue: 150),
-    TransactionModel(transactionName: 'Café com o @', transactionValue: 50),
-    TransactionModel(transactionName: 'Gasoline', transactionValue: 350),
-    TransactionModel(transactionName: 'Coca-cola', transactionValue: 7),
-    TransactionModel(transactionName: 'Docinho', transactionValue: 5)
-  ];
+ 
 
-  addNewTransaction(
-      {required String transactionName, required String transactionValue}) {
-    setState(() {
-      transactionList.insert(
-          0,
-          TransactionModel(
-              transactionName: transactionName,
-              transactionValue: num.parse(transactionValue)));
-    });
-  }
+  
 
   Future<void> _showDialog({required String transactionName, required String transactionValue}) async {
     return showDialog<void>(
@@ -86,19 +75,25 @@ class _TransactionPageState extends State<TransactionPage> {
                   label: "Nome da transação",
                   userInputController: transactionNameController),
               const SizedBox(height: 15),
+
+
               StandardForm(
                   focusNode: transactionValueFocus,
                   label: 'Valor da transação',
                   userInputController: transactionValueController),
               const SizedBox(height: 15),
+              
+              
               StandartButtom(
                   buttonText: "Adicinar nova transação",
                   onPressed: () {
-                    addNewTransaction(
+                    transactionController.addNewTransaction(
                         transactionName: transactionNameController.text,
                         transactionValue: transactionValueController.text);
                   }),
               const SizedBox(height: 15),
+              
+              
               ListView.separated(
                   separatorBuilder: (BuildContext context, int index) {
                     return const SizedBox(
@@ -106,9 +101,9 @@ class _TransactionPageState extends State<TransactionPage> {
                     );
                   },
                   shrinkWrap: true,
-                  itemCount: transactionList.length,
+                  itemCount: transactionController.transactionList.length,
                   itemBuilder: (context, index) {
-                    var transactionItem = transactionList[index];
+                    var transactionItem = transactionController.transactionList[index];
                     return MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
